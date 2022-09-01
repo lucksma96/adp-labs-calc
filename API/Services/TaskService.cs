@@ -48,7 +48,7 @@ namespace API.Services
             return responseTask;
         }
 
-        public async Task<string> PostTaskToAPI(TaskDTO task)
+        public async Task PostTaskToAPI(TaskDTO task)
         {
             _logger.LogInformation($"Posting Task {task.Id}");
 
@@ -69,7 +69,11 @@ namespace API.Services
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync();
+            var responseMessage = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(responseMessage);
+            }
         }
 
         public TaskDTO DoTask(TaskDTO task)
