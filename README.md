@@ -78,3 +78,15 @@ Then I remembered about the enumeration class concept I read once and decided to
 
 What fried my brain the most was the fact that the values used in the operations are humongous, almost at the limit of `long`, and operations such as multiplication cause an overflow. To fix that, I tried using `BigInteger`, but then division would no longer work, because it does not have floating point. And then I got to the real problem: how would I deal with such gigantic numbers **and** different return types? To me, the ideal would be to use some sort of class with generics, but that would required more time, so there were two options left (that I could think of): `dynamic` or `object`.
 In the end, I opted to using `object` as return type and everything worked.
+
+# (Technical) Debt
+
+## BigInteger Serialization
+
+When stringfying BigIntegers in C# (e.g. `.ToString()`), it results in the value itself as a string but, for some reason, when serializing, `System.Text.Json` returns the structure of the object without even including the actual value stored. This would require the implementation of a custom converter.
+
+Fiddle example: https://dotnetfiddle.net/QckmQj
+
+## Custom Exception Handling
+
+The mechanism implemented to handle exceptions, internal or from errors from the task API, could be improved upon with more try/catches and more exception types.
