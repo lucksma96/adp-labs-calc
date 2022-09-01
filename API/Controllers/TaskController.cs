@@ -20,7 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet("perform")]
-        public async Task<TaskDTO> Perform()
+        public async Task<ActionResult<TaskDTO>> Perform()
         {
             TaskDTO task = await _taskService.GetTaskFromAPI();
             _taskService.DoTask(task);

@@ -58,8 +58,10 @@ namespace API.Services
                 Result = task.Result
             };
 
-            var stringContent = $@"{{""id"":""{taskResult.Id}"",""result"":{taskResult.Result}}}";
-
+            // var stringContent = JsonSerializer.Serialize<TaskDTO>(taskResult, _jsonOptions);
+            // serialization of BigIntegers does not work the same as their interpolation
+            // ideally there should be a custom converter for them
+            var stringContent = $@"{{""id"":""{taskResult.Id}"",""result"":{taskResult.Result}}}"; // this is a workaround
             var content = new StringContent(stringContent, Encoding.UTF8, "application/json");
 
             var client = _clientFactory.CreateClient();
